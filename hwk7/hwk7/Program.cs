@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace hwk7
@@ -12,13 +13,27 @@ namespace hwk7
         static void Main(string[] args)
         {
             Database.SetInitializer(new Initializer());
+
+            //using (var context = new Context())
+            //{
+            //    var methodQuery = context.People;
+            //    foreach (var person in methodQuery)
+            //    {
+
+            //        Console.WriteLine("id: {0}, Firstname: {1}, Lastname: {2}",
+            //          person.PersonId, person.FirstName, person.LastName);
+            //    }
+            //    Thread.Sleep(5000);
+
+            //}
             VerifyDatabaseExists();
-         //   InsertNewCompany();
-          //  InsertNewRow();
-           QueryData();
-           // UpdateData();
-          //  DeleteData();
-            QueryCompanies();
+           // InsertNewCompany();
+          //  InsertPerson();
+            // UpdateData();
+             // DeleteData();
+          //  QueryData();
+         QueryCompanies();
+
         }
 
         private static void VerifyDatabaseExists()
@@ -29,14 +44,15 @@ namespace hwk7
             }
         }
 
-        private static void InsertNewRow()
+        private static void InsertPerson()
         {
             using (var context = new Context())
             {
                 var person = new Person
                 {
-                    FirstName = "John",
+                    FirstName = "Kevin",
                     LastName = "Doe"
+
                 };
 
                 context.People.Add(person);
@@ -52,8 +68,8 @@ namespace hwk7
                 var savedPeople = context.People;
                 foreach (var person in savedPeople)
                 {
-                    Console.WriteLine("Last name:{0},first name:{1},id {2}",
-                        person.LastName, person.FirstName, person.PersonId);
+                    Console.WriteLine("id: {0}, Firstname: {1}, Lastname: {2}",
+                      person.PersonId, person.FirstName, person.LastName);
                 }
             }
             Console.ReadKey();
@@ -65,8 +81,8 @@ namespace hwk7
             {
                 foreach (var company in context.Companies)
                 {
-                    Console.WriteLine("Name:{0},id:{1}",
-                        company.Name, company.CompanyId);
+                    Console.WriteLine("C.id: {0}, Company Name: {1}",
+                        company.CompanyId, company.Name);
                 }
             }
             Console.ReadKey();
@@ -77,7 +93,7 @@ namespace hwk7
             {
                 var company = new Company()
                 {
-                   Name  = "CSULA",
+                    Name = "CSULA",
                 };
 
                 context.Companies.Add(company);
@@ -106,14 +122,15 @@ namespace hwk7
         {
             using (var context = new Context())
             {
-                var personId = 2;
-                var person = context.People.Find(personId);
-                if (person != null)
-                {
-                    context.People.Remove(person);
-                    context.SaveChanges();
-                }
-
+                
+                    var personId = 2;
+                    var person = context.People.Find(personId);
+                    if (person != null)
+                    {
+                        context.People.Remove(person);
+                        context.SaveChanges();
+                    }
+                
             }
             QueryData();
         }

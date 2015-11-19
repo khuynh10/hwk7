@@ -17,5 +17,10 @@ namespace hwk7
         public DbSet<Person> People { get; set; }
         public DbSet<Company> Companies { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new PersonMap());
+        }
+
     }
 }
