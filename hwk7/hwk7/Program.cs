@@ -13,27 +13,16 @@ namespace hwk7
         static void Main(string[] args)
         {
             Database.SetInitializer(new Initializer());
-
-            //using (var context = new Context())
-            //{
-            //    var methodQuery = context.People;
-            //    foreach (var person in methodQuery)
-            //    {
-
-            //        Console.WriteLine("id: {0}, Firstname: {1}, Lastname: {2}",
-            //          person.PersonId, person.FirstName, person.LastName);
-            //    }
-            //    Thread.Sleep(5000);
-
-            //}
             VerifyDatabaseExists();
-           // InsertNewCompany();
-          //  InsertPerson();
-            // UpdateData();
-             // DeleteData();
-          //  QueryData();
-         QueryCompanies();
 
+
+            //InsertNewCompany("QTC");
+            //InsertPerson("Kevin", "Huynh");
+            //UpdateData();
+            //DeleteData();
+            QueryData();
+            QueryCompanies();
+            Console.ReadKey();
         }
 
         private static void VerifyDatabaseExists()
@@ -44,14 +33,14 @@ namespace hwk7
             }
         }
 
-        private static void InsertPerson()
+        private static void InsertPerson(String firstName, String lastName)
         {
             using (var context = new Context())
             {
                 var person = new Person
                 {
-                    FirstName = "Kevin",
-                    LastName = "Doe"
+                    FirstName = firstName,
+                    LastName = lastName
 
                 };
 
@@ -72,9 +61,7 @@ namespace hwk7
                       person.PersonId, person.FirstName, person.LastName);
                 }
             }
-            Console.ReadKey();
         }
-
         private static void QueryCompanies()
         {
             using (var context = new Context())
@@ -85,15 +72,16 @@ namespace hwk7
                         company.CompanyId, company.Name);
                 }
             }
-            Console.ReadKey();
         }
-        private static void InsertNewCompany()
+
+
+        private static void InsertNewCompany(String input)
         {
             using (var context = new Context())
             {
                 var company = new Company()
                 {
-                    Name = "CSULA",
+                    Name = input,
                 };
 
                 context.Companies.Add(company);
@@ -122,15 +110,15 @@ namespace hwk7
         {
             using (var context = new Context())
             {
-                
-                    var personId = 2;
-                    var person = context.People.Find(personId);
-                    if (person != null)
-                    {
-                        context.People.Remove(person);
-                        context.SaveChanges();
-                    }
-                
+
+                var personId = 2;
+                var person = context.People.Find(personId);
+                if (person != null)
+                {
+                    context.People.Remove(person);
+                    context.SaveChanges();
+                }
+
             }
             QueryData();
         }
